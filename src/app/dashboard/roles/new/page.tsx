@@ -78,11 +78,20 @@ export default function NewRolePage() {
         currency: 'USD',
       } : undefined;
 
+      let prioritiesAudioS3Key = undefined;
+      if (recorder.audioBlob) {
+        toast.loading('Uploading voice priorities...', { id: 'upload-audio' });
+        const audioFile = new File([recorder.audioBlob], 'priorities.webm', { type: recorder.audioBlob.type });
+        prioritiesAudioS3Key = await api.uploadFileToS3(audioFile, 'voice-priorities');
+        toast.success('Voice priorities uploaded', { id: 'upload-audio' });
+      }
+
       const { role, jobId: jId } = await api.createRole({
         title,
         jobDescription,
         payRange,
         priorities,
+        prioritiesAudioS3Key,
         interviewConfig: {
           standardQuestionCount: stdQuestions,
           customQuestionCount: customQuestions,
@@ -488,7 +497,7 @@ export default function NewRolePage() {
                   </div>
                   <div className="flex items-center gap-1">
                     <button
-                      className="p-1.5 rounded-lg hover:bg-white/5"
+                      className="p-1.5 rounded-lg hover:bg-gray-100"
                       onClick={() => setEditingCategory(i)}
                       title="Edit"
                     >
@@ -505,7 +514,7 @@ export default function NewRolePage() {
                 </div>
               ))}
               <button
-                className="w-full p-3 rounded-xl border border-dashed text-sm font-medium flex items-center justify-center gap-2 transition-colors hover:border-indigo-500/30"
+                className="w-full p-3 rounded-xl border border-dashed text-sm font-medium flex items-center justify-center gap-2 transition-colors hover:border-[#79DA37]/30"
                 style={{ borderColor: 'var(--border-primary)', color: 'var(--text-secondary)' }}
                 onClick={addCategory}
               >

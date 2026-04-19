@@ -15,16 +15,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body suppressHydrationWarning>
         {children}
         <Toaster
           position="top-right"
-          theme="dark"
+          theme="light"
           toastOptions={{
             style: {
-              background: 'var(--bg-card)',
-              border: '1px solid var(--border-primary)',
-              color: 'var(--text-primary)',
+              background: '#FFFFFF',
+              border: '1px solid #E5E7EB',
+              color: '#0D0D0D',
             },
           }}
         />

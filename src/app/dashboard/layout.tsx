@@ -21,10 +21,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--bg-primary)' }}>
+      <div className="min-h-screen flex items-center justify-center bg-[#FDFDFD]">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-10 h-10 border-2 rounded-full animate-spin" style={{ borderColor: 'var(--border-primary)', borderTopColor: 'var(--accent-primary)' }} />
-          <p style={{ color: 'var(--text-secondary)' }}>Loading...</p>
+          <div className="w-10 h-10 border-2 border-gray-200 border-t-[#79DA37] rounded-full animate-spin" />
+          <p className="text-gray-500">Loading...</p>
         </div>
       </div>
     );
@@ -33,7 +33,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   if (!isAuthenticated) return null;
 
   return (
-    <div className="min-h-screen" style={{ background: 'var(--bg-primary)' }}>
+    <div className="min-h-screen bg-[#FDFDFD]">
       <Navbar />
       <main className="max-w-7xl mx-auto px-6 py-8">
         {children}

@@ -52,31 +52,29 @@ export default function Navbar() {
   const creditPercent = credits
     ? Math.round((credits.creditsUsed / credits.creditsIncluded) * 100)
     : 0;
-  const creditColor = credits && credits.creditsRemaining <= 2 ? '#f59e0b' : '#818cf8';
+  const creditColor = credits && credits.creditsRemaining <= 2 ? '#f59e0b' : '#79DA37';
 
   return (
     <nav className="sticky top-0 z-50 no-print" style={{
-      background: 'rgba(8, 8, 14, 0.85)',
+      background: 'rgba(255, 255, 255, 0.9)',
       backdropFilter: 'blur(20px) saturate(180%)',
-      borderBottom: '1px solid rgba(255,255,255,0.05)',
+      borderBottom: '1px solid #E5E7EB',
     }}>
       <div className="max-w-7xl mx-auto px-6 h-18 flex items-center justify-between">
         {/* ─── Left: Logo + Nav Links ─── */}
         <div className="flex items-center gap-6">
           {/* Logo */}
           <Link href="/dashboard" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:shadow-[0_0_20px_rgba(99,102,241,0.4)]" style={{
-              background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-            }}>
-              <Sparkles className="w-4 h-4 text-white" />
+            <div className="w-8 h-8 rounded-xl bg-[#79DA37] flex items-center justify-center shadow-sm transition-all duration-300 group-hover:shadow-[0_0_20px_rgba(121,218,55,0.4)]">
+              <div className="w-3 h-3 bg-white rounded-sm rotate-45 transform" />
             </div>
-            <span className="font-bold text-[15px] tracking-tight text-white hidden sm:block">
+            <span className="font-bold text-[15px] tracking-tight text-[#0D0D0D] hidden sm:block">
               TalentScore
             </span>
           </Link>
 
           {/* Nav Divider */}
-          <div className="hidden md:block h-5 w-px" style={{ background: 'rgba(255,255,255,0.08)' }} />
+          <div className="hidden md:block h-5 w-px bg-gray-200" />
 
           {/* Nav Links */}
           <div className="hidden md:flex items-center gap-1">
@@ -88,15 +86,16 @@ export default function Navbar() {
                   href={link.href}
                   className="relative flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-medium transition-all duration-200"
                   style={{
-                    color: active ? '#c7d2fe' : 'rgba(255,255,255,0.4)',
-                    background: active ? 'rgba(99,102,241,0.1)' : 'transparent',
+                    color: active ? '#0A3D31' : '#9CA3AF',
+                    background: active ? 'rgba(121,218,55,0.12)' : 'transparent',
+                    fontWeight: active ? 700 : 500,
                   }}
                 >
                   <link.icon className="w-3.5 h-3.5" />
                   {link.label}
                   {active && (
                     <div className="absolute bottom-0 left-3 right-3 h-px" style={{
-                      background: 'linear-gradient(90deg, transparent, #818cf8, transparent)',
+                      background: 'linear-gradient(90deg, transparent, #79DA37, transparent)',
                     }} />
                   )}
                 </Link>
@@ -113,14 +112,14 @@ export default function Navbar() {
               href="/dashboard/billing"
               className="hidden sm:flex items-center gap-2.5 pl-2.5 pr-3.5 py-1.5 rounded-full text-[13px] transition-all duration-200 group"
               style={{
-                background: 'rgba(255,255,255,0.03)',
-                border: '1px solid rgba(255,255,255,0.07)',
+                background: '#F5F5F5',
+                border: '1px solid #E5E7EB',
               }}
             >
               {/* Circular progress indicator */}
               <div className="relative w-6 h-6 flex items-center justify-center">
                 <svg className="w-6 h-6 -rotate-90" viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="9" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="2.5" />
+                  <circle cx="12" cy="12" r="9" fill="none" stroke="#E5E7EB" strokeWidth="2.5" />
                   <circle
                     cx="12" cy="12" r="9" fill="none"
                     stroke={creditColor}
@@ -134,10 +133,10 @@ export default function Navbar() {
               </div>
 
               <div className="flex items-baseline gap-1">
-                <span className="font-semibold text-white group-hover:text-indigo-300 transition-colors">
+                <span className="font-semibold text-[#0D0D0D] group-hover:text-[#0A3D31] transition-colors">
                   {credits.creditsRemaining}
                 </span>
-                <span style={{ color: 'rgba(255,255,255,0.3)' }}>
+                <span style={{ color: '#9CA3AF' }}>
                   / {credits.creditsIncluded}
                 </span>
               </div>
@@ -148,24 +147,24 @@ export default function Navbar() {
           <div className="relative" ref={profileRef}>
             <button
               onClick={() => setProfileOpen(!profileOpen)}
-              className="flex items-center gap-2 px-2 py-1.5 rounded-xl transition-all duration-200 hover:bg-white/[0.04]"
+              className="flex items-center gap-2 px-2 py-1.5 rounded-xl transition-all duration-200 hover:bg-gray-50"
               style={{
-                border: profileOpen ? '1px solid rgba(255,255,255,0.1)' : '1px solid transparent',
+                border: profileOpen ? '1px solid #E5E7EB' : '1px solid transparent',
               }}
             >
               {/* Avatar */}
               <div className="w-7 h-7 rounded-lg flex items-center justify-center text-[12px] font-bold text-white" style={{
-                background: 'linear-gradient(135deg, #6366f1, #a855f7)',
+                background: 'linear-gradient(135deg, #0A3D31, #1A5C4A)',
               }}>
                 {user?.name?.charAt(0)?.toUpperCase() || '?'}
               </div>
 
               {/* Name */}
               <div className="hidden sm:block text-left">
-                <p className="text-[12px] font-medium text-white leading-none">
+                <p className="text-[12px] font-medium text-[#0D0D0D] leading-none">
                   {user?.name || 'User'}
                 </p>
-                <p className="text-[10px] leading-none mt-0.5" style={{ color: 'rgba(255,255,255,0.3)' }}>
+                <p className="text-[10px] leading-none mt-0.5" style={{ color: '#9CA3AF' }}>
                   {credits?.plan ? credits.plan.charAt(0).toUpperCase() + credits.plan.slice(1) : 'Free'} plan
                 </p>
               </div>
@@ -173,7 +172,7 @@ export default function Navbar() {
               <ChevronDown
                 className="w-3.5 h-3.5 transition-transform duration-200"
                 style={{
-                  color: 'rgba(255,255,255,0.3)',
+                  color: '#9CA3AF',
                   transform: profileOpen ? 'rotate(180deg)' : 'rotate(0)',
                 }}
               />
@@ -182,18 +181,18 @@ export default function Navbar() {
             {/* Dropdown Menu */}
             {profileOpen && (
               <div
-                className="absolute right-0 top-full mt-2 w-56 rounded-xl overflow-hidden shadow-2xl"
+                className="absolute right-0 top-full mt-2 w-56 rounded-xl overflow-hidden shadow-[0_15px_40px_rgba(0,0,0,0.08)]"
                 style={{
-                  background: 'rgba(18, 18, 28, 0.98)',
-                  border: '1px solid rgba(255,255,255,0.08)',
+                  background: 'rgba(255, 255, 255, 0.98)',
+                  border: '1px solid #E5E7EB',
                   backdropFilter: 'blur(20px)',
                   animation: 'slideDown 0.15s ease-out',
                 }}
               >
                 {/* User Info */}
-                <div className="px-4 py-3" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-                  <p className="text-sm font-semibold text-white">{user?.name}</p>
-                  <p className="text-[11px] mt-0.5" style={{ color: 'rgba(255,255,255,0.35)' }}>
+                <div className="px-4 py-3" style={{ borderBottom: '1px solid #F3F4F6' }}>
+                  <p className="text-sm font-semibold text-[#0D0D0D]">{user?.name}</p>
+                  <p className="text-[11px] mt-0.5" style={{ color: '#9CA3AF' }}>
                     {user?.email}
                   </p>
                 </div>
@@ -208,15 +207,15 @@ export default function Navbar() {
                       key={item.href}
                       href={item.href}
                       className="flex items-center gap-2.5 px-4 py-2 text-[13px] transition-colors"
-                      style={{ color: 'rgba(255,255,255,0.55)' }}
+                      style={{ color: '#6B7280' }}
                       onClick={() => setProfileOpen(false)}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.background = 'rgba(255,255,255,0.04)';
-                        e.currentTarget.style.color = 'rgba(255,255,255,0.85)';
+                        e.currentTarget.style.background = '#F5F5F5';
+                        e.currentTarget.style.color = '#0D0D0D';
                       }}
                       onMouseLeave={(e) => {
                         e.currentTarget.style.background = 'transparent';
-                        e.currentTarget.style.color = 'rgba(255,255,255,0.55)';
+                        e.currentTarget.style.color = '#6B7280';
                       }}
                     >
                       <item.icon className="w-4 h-4" />
@@ -226,7 +225,7 @@ export default function Navbar() {
                 </div>
 
                 {/* Logout */}
-                <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }} className="py-1.5">
+                <div style={{ borderTop: '1px solid #F3F4F6' }} className="py-1.5">
                   <button
                     onClick={() => { setProfileOpen(false); handleLogout(); }}
                     className="flex items-center gap-2.5 px-4 py-2 text-[13px] w-full transition-colors"

@@ -141,7 +141,7 @@ export default function ResultsPage() {
                 {scoredCandidates.map((cand: any, idx: number) => (
                   <tr
                     key={cand._id}
-                    className="cursor-pointer transition-colors hover:bg-white/[0.02]"
+                    className="cursor-pointer transition-colors hover:bg-gray-50"
                     style={{ borderBottom: '1px solid var(--border-primary)' }}
                     onClick={() => router.push(`/dashboard/candidates/${cand._id}`)}
                   >

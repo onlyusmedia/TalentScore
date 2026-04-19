@@ -144,8 +144,8 @@ export default function BillingPage() {
           return (
             <div
               key={plan.id}
-              className={`card p-6 relative ${plan.highlight ? 'ring-2 ring-indigo-500/50' : ''}`}
-              style={plan.highlight ? { background: 'linear-gradient(145deg, rgba(99,102,241,0.08), rgba(139,92,246,0.04))' } : {}}
+              className={`card p-6 relative ${plan.highlight ? 'ring-2 ring-[#79DA37]/50' : ''}`}
+              style={plan.highlight ? { background: 'linear-gradient(145deg, rgba(121,218,55,0.06), rgba(10,61,49,0.03))' } : {}}
             >
               {plan.highlight && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full text-xs font-semibold" style={{ background: 'var(--color-accent)', color: 'white' }}>
@@ -217,7 +217,7 @@ export default function BillingPage() {
             {history.map((record: any) => (
               <div key={record._id} className="flex items-center justify-between p-3 rounded-lg" style={{ background: 'var(--color-bg-secondary)' }}>
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'rgba(99,102,241,0.1)' }}>
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'rgba(121,218,55,0.1)' }}>
                     <FileText className="w-4 h-4" style={{ color: 'var(--color-accent)' }} />
                   </div>
                   <div>

@@ -86,8 +86,8 @@ export default function DashboardPage() {
         </div>
         <div className="card-glow p-5">
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: 'rgba(139, 92, 246, 0.1)' }}>
-              <BarChart3 className="w-4 h-4" style={{ color: 'var(--accent-secondary)' }} />
+            <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: 'rgba(121, 218, 55, 0.1)' }}>
+              <BarChart3 className="w-4 h-4" style={{ color: 'var(--color-accent-secondary)' }} />
             </div>
             <span className="text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>Roles Scored</span>
           </div>
@@ -117,13 +117,13 @@ export default function DashboardPage() {
           {roles.map((role) => (
             <div
               key={role._id}
-              className="card p-5 cursor-pointer group hover:border-indigo-500/30"
+              className="card p-5 cursor-pointer group hover:border-[#79DA37]/30"
               onClick={() => router.push(`/dashboard/roles/${role._id}`)}
             >
               <div className="flex items-center justify-between">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-1.5">
-                    <h3 className="text-lg font-semibold group-hover:text-indigo-400 transition-colors">
+                    <h3 className="text-lg font-semibold group-hover:text-[#0A3D31] transition-colors">
                       {role.title}
                     </h3>
                     <span className="badge text-xs" style={{

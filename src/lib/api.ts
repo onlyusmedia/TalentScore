@@ -155,7 +155,10 @@ class ApiClient {
     const uploadRes = await fetch(uploadUrl, {
       method: 'PUT',
       body: file,
-      headers: { 'Content-Type': file.type },
+      headers: { 
+        'Content-Type': file.type,
+        'x-amz-server-side-encryption': 'AES256'
+      },
     });
 
     if (!uploadRes.ok) {

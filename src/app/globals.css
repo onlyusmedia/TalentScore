@@ -2,19 +2,19 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg-primary: #0a0a0f;
-  --color-bg-secondary: #12121a;
-  --color-bg-card: #16161f;
-  --color-bg-card-hover: #1c1c27;
-  --color-bg-elevated: #1e1e2a;
-  --color-border-main: #2a2a3a;
-  --color-border-hover: #3a3a50;
-  --color-text-main: #f0f0f5;
-  --color-text-secondary: #8888a0;
-  --color-text-muted: #55556a;
-  --color-accent: #6366f1;
-  --color-accent-hover: #818cf8;
-  --color-accent-secondary: #8b5cf6;
+  --color-bg-primary: #FDFDFD;
+  --color-bg-secondary: #F5F5F5;
+  --color-bg-card: #FFFFFF;
+  --color-bg-card-hover: #FAFAFA;
+  --color-bg-elevated: #F0F0F0;
+  --color-border-main: #E5E7EB;
+  --color-border-hover: #D1D5DB;
+  --color-text-main: #0D0D0D;
+  --color-text-secondary: #6B7280;
+  --color-text-muted: #9CA3AF;
+  --color-accent: #0A3D31;
+  --color-accent-hover: #0B3B24;
+  --color-accent-secondary: #1A5C4A;
   --color-success: #22c55e;
   --color-warning: #f59e0b;
   --color-danger: #ef4444;
@@ -45,14 +45,14 @@ body {
   border-radius: 0.75rem;
   font-weight: 600;
   font-size: 0.875rem;
-  color: white;
+  color: #111;
   transition: all 0.2s ease;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
-  box-shadow: 0 2px 12px rgba(99, 102, 241, 0.3);
+  background: #79DA37;
+  box-shadow: 0 2px 12px rgba(121, 218, 55, 0.25);
   border: none;
   cursor: pointer;
 }
-.btn-primary:hover { box-shadow: 0 4px 20px rgba(99, 102, 241, 0.5); transform: translateY(-1px); }
+.btn-primary:hover { box-shadow: 0 4px 20px rgba(121, 218, 55, 0.4); transform: translateY(-1px); }
 .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
 
 .btn-secondary {
@@ -74,12 +74,12 @@ body {
   font-weight: 500;
   font-size: 0.875rem;
   transition: all 0.2s ease;
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.2);
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.15);
   color: var(--color-danger);
   cursor: pointer;
 }
-.btn-danger:hover { background: rgba(239, 68, 68, 0.2); }
+.btn-danger:hover { background: rgba(239, 68, 68, 0.15); }
 
 .card {
   background: var(--color-bg-card);
@@ -90,7 +90,7 @@ body {
 .card:hover { border-color: var(--color-border-hover); }
 
 .card-glow {
-  background: linear-gradient(145deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.02));
+  background: linear-gradient(145deg, rgba(121, 218, 55, 0.04), rgba(10, 61, 49, 0.02));
   border: 1px solid var(--color-border-main);
   border-radius: 1rem;
   position: relative;
@@ -101,8 +101,8 @@ body {
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 1px;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
-  opacity: 0.5;
+  background: linear-gradient(135deg, #79DA37, #0A3D31);
+  opacity: 0.4;
 }
 
 .input-field {
@@ -117,7 +117,7 @@ body {
   color: var(--color-text-main);
 }
 .input-field::placeholder { color: var(--color-text-muted); }
-.input-field:focus { border-color: var(--color-accent); box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15); }
+.input-field:focus { border-color: #79DA37; box-shadow: 0 0 0 3px rgba(121, 218, 55, 0.15); }
 
 .textarea-field {
   width: 100%;
@@ -133,7 +133,7 @@ body {
   min-height: 120px;
 }
 .textarea-field::placeholder { color: var(--color-text-muted); }
-.textarea-field:focus { border-color: var(--color-accent); box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15); }
+.textarea-field:focus { border-color: #79DA37; box-shadow: 0 0 0 3px rgba(121, 218, 55, 0.15); }
 
 .badge { display: inline-flex; align-items: center; padding: 0.25rem 0.625rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 500; }
 .badge-success { background: rgba(34, 197, 94, 0.1); color: var(--color-success); }
@@ -149,7 +149,7 @@ body {
 
 @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes slideIn { from { opacity: 0; transform: translateX(-12px); } to { opacity: 1; transform: translateX(0); } }
-@keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 8px rgba(99, 102, 241, 0.3); } 50% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.5); } }
+@keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 8px rgba(121, 218, 55, 0.3); } 50% { box-shadow: 0 0 20px rgba(121, 218, 55, 0.5); } }
 
 .animate-fade-in { animation: fadeIn 0.4s ease forwards; }
 .animate-slide-in { animation: slideIn 0.3s ease forwards; }

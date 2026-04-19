@@ -49,7 +49,11 @@ export default function RoleDetailPage() {
 
   const handleFileDrop = useCallback(async (files: FileList) => {
     setUploading(true);
-    const validTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'text/plain'];
+    const validTypes = [
+      'application/pdf',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'text/plain'
+    ];
 
     for (const file of Array.from(files)) {
       if (!validTypes.includes(file.type) && !file.name.endsWith('.pdf') && !file.name.endsWith('.docx')) {
@@ -58,19 +62,22 @@ export default function RoleDetailPage() {
       }
 
       try {
-        // For demo: simulate S3 upload and create candidate
-        const s3Key = `resumes/demo/${id}/${file.name}`;
+        // 1. Upload to S3
+        toast.loading(`Uploading ${file.name}...`, { id: `upload-${file.name}` });
+        const s3Key = await api.uploadFileToS3(file, 'resumes', id);
+        
+        // 2. Add Candidate with real S3 key
         const { candidate, jobId } = await api.addCandidate(id, {
           s3Key,
           fileName: file.name,
-          fileType: file.name.split('.').pop(),
+          fileType: file.name.split('.').pop() as any,
         });
 
         setCandidates((prev) => [candidate, ...prev]);
         setActiveJobId(jobId);
-        toast.success(`${file.name} uploaded — processing resume...`);
+        toast.success(`${file.name} uploaded — processing resume...`, { id: `upload-${file.name}` });
       } catch (err: any) {
-        toast.error(`${file.name}: ${err.message}`);
+        toast.error(`${file.name}: ${err.message}`, { id: `upload-${file.name}` });
       }
     }
     setUploading(false);
@@ -97,19 +104,35 @@ export default function RoleDetailPage() {
     }
   };
 
-  const handleUploadInterview = async (candidateId: string) => {
-    if (!transcript.trim()) {
-      toast.error('Please enter a transcript');
+  const handleUploadInterview = async (candidateId: string, audioFile?: File) => {
+    if (!transcript.trim() && !audioFile) {
+      toast.error('Please enter a transcript or upload an audio file');
       return;
     }
+
     try {
-      const { jobId } = await api.uploadInterview(candidateId, { transcript });
+      setUploading(true);
+      let audioS3Key = undefined;
+
+      if (audioFile) {
+        toast.loading(`Uploading ${audioFile.name}...`, { id: 'upload-interview' });
+        audioS3Key = await api.uploadFileToS3(audioFile, 'audio', id);
+        toast.success('Interview audio uploaded', { id: 'upload-interview' });
+      }
+
+      const { jobId } = await api.uploadInterview(candidateId, { 
+        transcript: transcript.trim() || undefined,
+        audioS3Key 
+      });
+
       setActiveJobId(jobId);
       setShowInterviewModal(null);
       setTranscript('');
-      toast.success('Interview uploaded — processing...');
+      toast.success('Interview submitted — processing...');
     } catch (err: any) {
-      toast.error(err.message);
+      toast.error(err.message, { id: 'upload-interview' });
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -194,7 +217,7 @@ export default function RoleDetailPage() {
 
       {/* Upload Zone */}
       <div
-        className={`card p-8 text-center mb-6 cursor-pointer transition-all border-dashed ${dragOver ? 'border-indigo-500 bg-indigo-500/5' : ''}`}
+        className={`card p-8 text-center mb-6 cursor-pointer transition-all border-dashed ${dragOver ? 'border-[#79DA37] bg-[#79DA37]/5' : ''}`}
         onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
         onDragLeave={() => setDragOver(false)}
         onDrop={handleDrop}
@@ -324,23 +347,48 @@ export default function RoleDetailPage() {
                 <label className="block text-sm font-medium mb-1.5">Paste Transcript</label>
                 <textarea
                   className="textarea-field"
-                  style={{ minHeight: '180px' }}
+                  style={{ minHeight: '120px' }}
                   placeholder="Paste the interview transcript here..."
                   value={transcript}
                   onChange={(e) => setTranscript(e.target.value)}
                 />
               </div>
 
-              <p className="text-xs text-center" style={{ color: 'var(--text-muted)' }}>
-                Audio/video upload coming soon. For now, paste the transcript directly.
-              </p>
+              <div className="flex items-center gap-4">
+                <div className="flex-1 h-px" style={{ background: 'var(--border-primary)' }} />
+                <span className="text-xs" style={{ color: 'var(--text-muted)' }}>OR</span>
+                <div className="flex-1 h-px" style={{ background: 'var(--border-primary)' }} />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-1.5">Upload Audio/Video</label>
+                <div 
+                  className="border-2 border-dashed rounded-xl p-4 text-center cursor-pointer hover:bg-gray-50 transition-colors"
+                  style={{ borderColor: 'var(--border-primary)' }}
+                  onClick={() => document.getElementById('audio-input')?.click()}
+                >
+                  <input 
+                    id="audio-input" 
+                    type="file" 
+                    accept="audio/*,video/*" 
+                    className="hidden" 
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) handleUploadInterview(showInterviewModal, file);
+                    }}
+                  />
+                  <Mic className="w-5 h-5 mx-auto mb-2" style={{ color: 'var(--text-muted)' }} />
+                  <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Click to upload recording (.mp3, .wav, .mp4, etc.)</p>
+                </div>
+              </div>
 
               <button
                 className="btn-primary w-full"
                 onClick={() => handleUploadInterview(showInterviewModal)}
-                disabled={!transcript.trim()}
+                disabled={!transcript.trim() || uploading}
               >
-                Upload & Process
+                {uploading ? <Loader2 className="w-4 h-4 animate-spin mr-2 inline" /> : null}
+                Process Transcript
               </button>
             </div>
           </div>
